@@ -3,6 +3,16 @@ import * as json from './element'
 export default tag App < div
 	elements = [new json.JsonElement]
 
+	def post
+		let body = elements.map(do(e) e.toJson!)
+		await window.fetch('/json', {
+			method: 'POST'
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(body)
+		})
+
 	css w:50%
 	css .container d:flex fld:column g:16px
 	css .row d:flex g:16px
@@ -35,4 +45,4 @@ export default tag App < div
 						<button @click=el.value.value.push(new json.JsonElement)> '+'
 		<button[w:100% mt:16px] @click=elements.push(new json.JsonElement)> '+'
 		<div[ta:end mt:64px]>
-			<button> 'Submit'
+			<button @click=post> 'Submit'

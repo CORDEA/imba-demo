@@ -4,6 +4,7 @@ import index from './app/index.html'
 # A simple state that exists until the server stops
 const state = {
 	count: 0,
+	json: {}
 }
 
 # Using Imba with Express as the server is quick to set up:
@@ -27,6 +28,13 @@ app.get('/count') do(req,res)
 	res.send({
 		count: state.count
 	})
+
+app.get('/json') do(req, res)
+	res.send(state.json)
+
+app.post('/json', jsonBody) do(req, res)
+	state.json = req.body
+	res.send({})
 
 # catch-all route that returns our index.html
 app.get(/.*/) do(req,res)
