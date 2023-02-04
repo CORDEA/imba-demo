@@ -1,7 +1,8 @@
 export const types = [
 	'string',
 	'int',
-	'bool'
+	'bool',
+	'list'
 ]
 
 export class JsonValue
@@ -25,6 +26,12 @@ export class JsonBool < JsonValue
 	def toJson
 		return value
 
+export class JsonList < JsonValue
+	value = [new JsonElement]
+
+	def toJson
+		return value.map(do(e) e.value.toJson!)
+
 export class JsonElement < JsonValue
 	name = ''
 	value = new JsonString
@@ -36,6 +43,8 @@ export class JsonElement < JsonValue
 			return 'int'
 		if value isa JsonBool
 			return 'bool'
+		if value isa JsonList
+			return 'list'
 
 	set type v
 		switch v
@@ -45,6 +54,8 @@ export class JsonElement < JsonValue
 				value = new JsonInt
 			when 'bool'
 				value = new JsonBool
+			when 'list'
+				value = new JsonList
 
 	def toJson
 		const json = {}

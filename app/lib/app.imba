@@ -19,8 +19,20 @@ export default tag App < div
 								<option value=t selected> t
 							else
 								<option value=t> t
-					<input[fl:4] type='text' bind=el.value.value>
-		<div[ta:end mt:16px]>
-			<button @click=elements.push(new json.JsonElement)> '+'
+					if el.type != 'list'
+						<input[fl:4] type='text' bind=el.value.value>
+				if el.type == 'list'
+					<div.container[ml:32px]>
+						for e in el.value.value
+							<div.row>
+								<select[fl:1] bind=e.type>
+									for t in json.types
+										if t == e.type
+											<option value=t selected> t
+										else
+											<option value=t> t
+								<input[fl:4] type='text' bind=e.value.value>
+						<button @click=el.value.value.push(new json.JsonElement)> '+'
+		<button[w:100% mt:16px] @click=elements.push(new json.JsonElement)> '+'
 		<div[ta:end mt:64px]>
 			<button> 'Submit'
