@@ -5,7 +5,7 @@ css .row d:flex g:16px
 export default tag Input < div
 	<self>
 		if data.type == 'list'
-			<div.row>
+			<div.row[mb:16px]>
 				<input[fl:2] type='text' bind=data.name>
 				<TypeSelector bind=data.type>
 			<ListRow bind=data level=1>
@@ -18,7 +18,7 @@ export default tag Input < div
 tag ListRow < div
 	level = 1
 
-	<self>
+	<self.row[fld:column]>
 		for e in data.value.value
 			if e.type == 'list'
 				<ListRow bind=e level=level+1>
@@ -26,6 +26,7 @@ tag ListRow < div
 				<div.row[ml:{level * 32}px]>
 					<TypeSelector bind=e.type>
 					<input[fl:4] type='text' bind=e.value.value>
+		<button[ml:{level * 32}px] @click=data.value.value.push(new json.JsonElement)> '+'
 
 tag TypeSelector < div
 	<self>
