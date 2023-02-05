@@ -1,24 +1,31 @@
 import * as json from './element'
 
+css .row d:flex g:16px
+
 export default tag Input < div
-
-	css .row d:flex g:16px
-
 	<self>
 		if data.type == 'list'
 			<div.row>
 				<input[fl:2] type='text' bind=data.name>
 				<TypeSelector bind=data.type>
-			<div[ml:32px]>
-				for e in data.value.value
-					<div.row>
-						<TypeSelector bind=e.type>
-						<input[fl:4] type='text' bind=e.value.value>
+			<ListRow bind=data level=1>
 		else
 			<div.row>
 				<input[fl:2] type='text' bind=data.name>
 				<TypeSelector bind=data.type>
 				<input[fl:4] type='text' bind=data.value.value>
+
+tag ListRow < div
+	level = 1
+
+	<self>
+		for e in data.value.value
+			if e.type == 'list'
+				<ListRow bind=e level=level+1>
+			else
+				<div.row[ml:{level * 32}px]>
+					<TypeSelector bind=e.type>
+					<input[fl:4] type='text' bind=e.value.value>
 
 tag TypeSelector < div
 	<self>
