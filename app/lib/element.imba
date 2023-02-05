@@ -6,35 +6,66 @@ export const types = [
 ]
 
 export class JsonValue
-	value = null
+	get value
+		return null
 
 export class JsonString < JsonValue
-	value = ''
+	#value = ''
+
+	get value
+		return #value
+
+	set value v
+		#value = v
 
 	def toJson
 		return value
 
 export class JsonInt < JsonValue
-	value = 0
+	#value = 0
+
+	get value
+		return #value
+
+	set value v
+		#value = parseInt(v)
 
 	def toJson
 		return value
 
 export class JsonBool < JsonValue
-	value = false
+	#value = false
+
+	get value
+		return #value
+
+	set value v
+		#value = v
 
 	def toJson
 		return value
 
 export class JsonList < JsonValue
-	value = [new JsonElement]
+	#value = [new JsonElement]
+
+	get value
+		return #value
+
+	set value v
+		#value = v
 
 	def toJson
 		return value.map(do(e) e.value.toJson!)
 
 export class JsonElement < JsonValue
 	name = ''
-	value = new JsonString
+	#value = new JsonString
+
+	get value
+		return #value
+
+	set value v
+		#value = v
 
 	get type
 		if value isa JsonString
