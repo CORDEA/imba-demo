@@ -1,9 +1,7 @@
-export const types = [
-	'string',
-	'int',
-	'bool',
-	'list'
-]
+export const TYPE_STRING = 'string'
+export const TYPE_INT = 'int'
+export const TYPE_BOOL = 'bool'
+export const TYPE_LIST = 'list'
 
 export class JsonValue
 	get value
@@ -69,23 +67,23 @@ export class JsonElement < JsonValue
 
 	get type
 		if value isa JsonString
-			return 'string'
+			return TYPE_STRING
 		if value isa JsonInt
-			return 'int'
+			return TYPE_INT
 		if value isa JsonBool
-			return 'bool'
+			return TYPE_BOOL
 		if value isa JsonList
-			return 'list'
+			return TYPE_LIST
 
 	set type v
 		switch v
-			when 'string'
+			when TYPE_STRING
 				value = new JsonString
-			when 'int'
+			when TYPE_INT
 				value = new JsonInt
-			when 'bool'
+			when TYPE_BOOL
 				value = new JsonBool
-			when 'list'
+			when TYPE_LIST
 				value = new JsonList
 
 	def toJson

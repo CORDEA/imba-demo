@@ -4,7 +4,7 @@ css .row d:flex g:16px
 
 export default tag Input < div
 	<self>
-		if data.type == 'list'
+		if data.type == json.TYPE_LIST
 			<div.row[mb:16px]>
 				<input[fl:2] type='text' bind=data.name>
 				<TypeSelector bind=data.type>
@@ -20,7 +20,7 @@ tag ListRow < div
 
 	<self.row[fld:column]>
 		for e in data.value.value
-			if e.type == 'list'
+			if e.type == json.TYPE_LIST
 				<ListRow bind=e level=level+1>
 			else
 				<div.row[ml:{level * 32}px]>
@@ -31,7 +31,7 @@ tag ListRow < div
 tag TypeSelector < div
 	<self>
 		<select[fl:1] bind=data>
-			for t in json.types
+			for t in [json.TYPE_STRING, json.TYPE_INT, json.TYPE_BOOL, json.TYPE_LIST]
 				if t == data
 					<option value=t selected> t
 				else
@@ -39,7 +39,7 @@ tag TypeSelector < div
 
 tag ValueInput < div
 	<self>
-		if data.type == 'bool'
+		if data.type == json.TYPE_BOOL
 			let v = data.value.value
 			<select[w:100%] bind=v>
 				for b in [true, false]
