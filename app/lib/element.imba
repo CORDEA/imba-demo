@@ -40,7 +40,7 @@ export class JsonBool < JsonValue
 		return #value
 
 	set value v
-		#value = v
+		#value = Boolean(v)
 
 	def toJson
 		return value

@@ -13,7 +13,7 @@ export default tag Input < div
 			<div.row>
 				<input[fl:2] type='text' bind=data.name>
 				<TypeSelector bind=data.type>
-				<input[fl:4] type='text' bind=data.value.value>
+				<ValueInput[fl:4] bind=data>
 
 tag ListRow < div
 	level = 1
@@ -25,7 +25,7 @@ tag ListRow < div
 			else
 				<div.row[ml:{level * 32}px]>
 					<TypeSelector bind=e.type>
-					<input[fl:4] type='text' bind=e.value.value>
+					<ValueInput[fl:4] bind=e>
 		<button[ml:{level * 32}px] @click=data.value.value.push(new json.JsonElement)> '+'
 
 tag TypeSelector < div
@@ -36,3 +36,16 @@ tag TypeSelector < div
 					<option value=t selected> t
 				else
 					<option value=t> t
+
+tag ValueInput < div
+	<self>
+		if data.type == 'bool'
+			let v = data.value.value
+			<select[w:100%] bind=v>
+				for b in [true, false]
+					if v == b
+						<option value=b selected> b
+					else
+						<option value=b> b
+		else
+			<input[w:100%] type='text' bind=data.value.value>
